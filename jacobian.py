@@ -180,7 +180,10 @@ print("ωy = ", ωy)
 print("ωz = ", ωz)
 
 
+## singularity
 
+D_J = np.linalg.det(JM1)
+print(D_J)
 
 
 
