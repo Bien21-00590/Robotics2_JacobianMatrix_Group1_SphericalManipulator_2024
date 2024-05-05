@@ -15,7 +15,7 @@ from tkinter import font as tkFont
 
 
 
-##----------------------------------------------------------------------------------------------------------------------------------##
+#-----------------------------------------------------------------#
 
 ## Create GUI with Title
 
@@ -51,6 +51,19 @@ def warning():
     messagebox.showinfo("Value Undefined","Unable to compute.")
     condition = True
 
+
+def warning_prismatic(): 
+    messagebox.showinfo("Input Value Incorrect","d3 Prismatic Joint should be positive!")
+    condition = True
+
+
+##----------------------------------------------------------------------------------------------------------------------------------##
+
+## degree to radian conversion
+
+def deg_rad(T):
+    return (T/180)*np.pi
+
 ##----------------------------------------------------------------------------------------------------------------------------------##
 
 ## 1 FORWARD KINEMATICS BUTTON
@@ -63,9 +76,9 @@ def f_k():
     a3 = float(a3_E.get()) ## 15
 
     # joint variables
-    T1 = float(T1_E.get()) #-75 mm
+    T1 = float(T1_E.get()) #-30 deg
     T2 = float(T2_E.get()) #45 deg
-    d3 = float(d3_E.get()) #12.5 deg
+    d3 = float(d3_E.get()) #7.5 mm
 
     # degree to radian
     T1 = (T1/180.0)*np.pi
@@ -104,6 +117,11 @@ def f_k():
     H0_2 = np.dot(H0_1,H1_2)
     H0_3 = np.dot(H0_2,H2_3)
     H0_3 = np.array(H0_3)
+
+    if d3 < 0:
+        warning_prismatic()
+    else:
+        pass
 
 
     X0_3 = H0_3[0,3]
@@ -215,61 +233,60 @@ def f_k():
 
     J = np.concatenate((JM1,JM2),0)
     J = np.around(J,3)
-    print(J)
+    ## print(J)
 
 
     ## Update Button Function
 
     def update_velo():
         
-        T1p = T1_slider.get()
-        T2p = T2_slider.get()
+        T1p = deg_rad(T1_slider.get())
+        T2p = deg_rad(T2_slider.get())
         d3p = d3_slider.get()
 
         q = np.array([[T1p],
                      [T2p],
                      [d3p]])
         E = np.dot(J,q)
-        print(q)
 
         xp_e = E[0,0]
         x_entry.delete(0,END)
-        x_entry.insert(0,str(xp_e))
+        x_entry.insert(0,str(np.around(xp_e,3)))
 
         yp_e = E[1,0]
         y_entry.delete(0,END)
-        y_entry.insert(0,str(yp_e))
+        y_entry.insert(0,str(np.around(yp_e,3)))
 
         zp_e = E[2,0]
         z_entry.delete(0,END)
-        z_entry.insert(0,str(zp_e))
+        z_entry.insert(0,str(np.around(zp_e,3)))
 
 
         ωx_e = E[3,0]
         ωx_entry.delete(0,END)
-        ωx_entry.insert(0,str(ωx_e))
+        ωx_entry.insert(0,str(np.around(ωx_e,3)))
 
         ωy_e = E[4,0]
         ωy_entry.delete(0,END)
-        ωy_entry.insert(0,str(ωy_e))
+        ωy_entry.insert(0,str(np.around(ωy_e,3)))
 
         ωz_e = E[5,0]
         ωz_entry.delete(0,END)
-        ωz_entry.insert(0,str(ωz_e))
+        ωz_entry.insert(0,str(np.around(ωz_e,3)))
 
 
     ## Jaacobian Sliders
 
     T1_velo = Label(J_sw, text = ('θ1 = '), font = (5))
-    T1_slider = Scale(J_sw, from_=0, to_=3.142, orient=HORIZONTAL, length=100)
-    T1_unit = Label(J_sw, text=('rad/s'), font =(5))
+    T1_slider = Scale(J_sw, from_=0, to_=180, orient=HORIZONTAL, length=100)
+    T1_unit = Label(J_sw, text=('deg/s'), font =(5))
 
     T2_velo = Label(J_sw, text = ('θ2 = '), font = (5))
-    T2_slider = Scale(J_sw, from_=0, to_=3.142, orient=HORIZONTAL, length=100, sliderlength=10)
-    T2_unit = Label(J_sw, text=('rad/s'), font =(5))
+    T2_slider = Scale(J_sw, from_=0, to_=180, orient=HORIZONTAL, length=100, sliderlength=10)
+    T2_unit = Label(J_sw, text=('deg/s'), font =(5))
 
     d3_velo = Label(J_sw, text = ('d3 = '), font = (5))
-    d3_slider = Scale(J_sw, from_=0, to_=25, orient=HORIZONTAL, length=100, sliderlength=10)
+    d3_slider = Scale(J_sw, from_=0, to_=20, orient=HORIZONTAL, length=100, sliderlength=10)
     d3_unit = Label(J_sw, text=('cm/s'), font =(5))
 
     T1_velo.grid(row=0, column=0)
@@ -303,16 +320,16 @@ def f_k():
 
     ωx_velo = Label(J_sw, text=('ωx = '), font = 5)
     ωx_entry = Entry(J_sw, width=10, font= (10))
-    ωx_unit = Label(J_sw, text=('rad/s '), font = 5)
+    ωx_unit = Label(J_sw, text=('deg/s '), font = 5)
 
     ωy_velo = Label(J_sw, text=('ωz = '), font = 5)
     ωy_entry = Entry(J_sw, width=10, font= (10))
-    ωy_unit = Label(J_sw, text=('rad/s '), font = 5)
+    ωy_unit = Label(J_sw, text=('deg/s '), font = 5)
 
 
     ωz_velo = Label(J_sw, text=('ωz = '), font = 5)
     ωz_entry = Entry(J_sw, width=10, font= (10))
-    ωz_unit = Label(J_sw, text=('rad/s '), font = 5)
+    ωz_unit = Label(J_sw, text=('deg/s '), font = 5)
 
 
     x_velo.grid(row=3, column=0)
@@ -360,11 +377,19 @@ def f_k():
     ], name="Spherical") 
 
 
-    q1 = np.array([T1, T2, d3/100])
+
 
     print(Spherical)
+    
+    q0 = np.array([0,0,0]) ## origin of end effector
 
-    Spherical.plot(q1, limits=[-.7,.7,-.7,.7,0,.7],block=True,)
+    q1 = np.array([deg_rad(float(T1_E.get())),
+                   deg_rad(float(T2_E.get())),
+                   float((d3_E.get()))/100,])
+    
+    traj1 = rtb.jtraj(q0, q1, 25)
+
+    Spherical.plot(traj1.q, limits = [-.7,.7,-.7,.7,0,.7],block=True)
 
 
 
@@ -436,9 +461,29 @@ def i_k():
 
     q1 = np.array([T1, T2, d3/100])
 
+  
     print(Spherical)
 
-    Spherical.plot(q1, limits=[-.7,.7,-.7,.7,0,.7],block=True,)
+    def deg_rad(T):
+        return (T/180)*np.pi
+    
+    q0_3 = float((d3_E.get()))/100
+
+    q0 = np.array([0,0,0]) ## origin of end effector
+
+    q1 = np.array([deg_rad(float(T1_E.get())),
+                   deg_rad(float(T2_E.get())),
+                   q0_3,])
+    
+    if q0_3 < 0:
+        warning_prismatic()
+    else:
+    
+        traj1 = rtb.jtraj(q0, q1, 25)
+
+        Spherical.plot(traj1.q, limits = [-.7,.7,-.7,.7,0,.7],block=True)
+
+
 
 
 
