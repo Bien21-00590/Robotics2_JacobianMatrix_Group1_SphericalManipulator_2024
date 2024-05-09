@@ -188,11 +188,4 @@ print(D_J)
 ## Inverse Velocity
 
 I_V = np.linalg.inv(JM1)
-print =(I_V)
-
-## force torque analysis
-
-F_T = np.transpose(JM1)
-
-print(JM1)
-print(F_T)
+print(I_V)
