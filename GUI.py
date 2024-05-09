@@ -366,10 +366,6 @@ def f_k():
 
 ## Model Part (FK)
 
-## CREATE LINKS
-## Robot_variable = DHRobot([RevoluteDH(d,r,alpha,offset=theta,qlim)])
-## Robot_variable = DHRobot([PrismaticDH(d=0,r,alpha,offset=d,qlim)])
-
     Spherical = DHRobot([
     RevoluteDH(a1/100,0,(90/180)*np.pi,(0/180)*np.pi,qlim=[(-90/180)*np.pi/2,(90/180)*np.pi/2]),
     RevoluteDH(0,0,(90/180)*np.pi,(90/180)*np.pi,qlim=[(-90/180)*np.pi/2,(90/180)*np.pi/2]),
@@ -416,6 +412,8 @@ def i_k():
 
     if x0_3 == 0 and y0_3==0 or x0_3 == 0:
         warning()
+    else:
+        pass
 
     T1 = np.arctan(y0_3 / x0_3)
 
@@ -446,11 +444,6 @@ def i_k():
 
 
 ## Model Part (IK)
-
-## CREATE LINKS
-## Robot_variable = DHRobot([RevoluteDH(d,r,alpha,offset=theta,qlim)])
-## Robot_variable = DHRobot([PrismaticDH(d=0,r,alpha,offset=d,qlim)])
-
 
     Spherical = DHRobot([
     RevoluteDH(a1/100,0,(90/180)*np.pi,(0/180)*np.pi,qlim=[(-90/180)*np.pi/2,(90/180)*np.pi/2]),
@@ -648,6 +641,3 @@ img_2.pack(fill="both")
 
 mygui.mainloop()
 
-
-## GUI comment update
-## aayusin na lang gui sa velocity calculator
