@@ -1,1 +1,5 @@
 # Robotics2_JacobianMatrix_Group1_SphericalManipulator_2024
+
+![442409510_317577787901016_7765138735164227923_n](https://github.com/Bien21-00590/Robotics2_JacobianMatrix_Group1_SphericalManipulator_2024/assets/157565160/01625949-7cc1-41df-b366-16c2a686fbf8)
+![436138960_3481616702130165_2618992258264097894_n](https://github.com/Bien21-00590/Robotics2_JacobianMatrix_Group1_SphericalManipulator_2024/assets/157565160/09d3cbb7-dbc2-4014-8178-00de33f11b91)
+![436405697_751680377088630_3191759330726619476_n](https://github.com/Bien21-00590/Robotics2_JacobianMatrix_Group1_SphericalManipulator_2024/assets/157565160/301ff204-23f5-4353-9440-4d1d9d3c2960)
